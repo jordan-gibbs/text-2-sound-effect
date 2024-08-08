@@ -66,10 +66,11 @@ if st.button("Generate Sound"):
     elif prompt:
         output_paths = [f"{prompt}_{i+1}.mp3" for i in range(num_generations)]
         st.session_state.generated_files = output_paths
-
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            futures = [executor.submit(generate_sound_effect, prompt, path) for path in output_paths]
-            concurrent.futures.wait(futures)
+        
+        with st.spinner(""):
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                futures = [executor.submit(generate_sound_effect, prompt, path) for path in output_paths]
+                concurrent.futures.wait(futures)
 
 # Display the audio files and download buttons
 for path in st.session_state.generated_files:
